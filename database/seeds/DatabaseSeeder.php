@@ -12,7 +12,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        $this->call(AdminsSeeder::class);
+        $this->call(UsersSeeder::class);
+        $this->call(NhanVienSeeder::class);
+        $this->call(QuyensSeeder::class);
+        $this->call(ChucVuSeeder::class);
+        $this->call(PhanQuyenSeeder::class);
         $this->call(Admin_Chucvu::class);
+        $this->call(DocGiasSeeder::class);
+
+        $this->call(SachGroupSeeder::class);
+        $this->call(NhanVienGroupSeeder::class);
     }
 }
 class UsersSeeder extends Seeder{
@@ -150,5 +160,15 @@ class Admin_Chucvu extends Seeder
 }
 
 
+
+class DocGiasSeeder extends Seeder{
+
+    public function run()
+    {  
+        DB::table('docgias')->insert([
+            ['hoTen'=>'Chu Anh Toàn','namSinh'=>rand(1990,2002),'diaChi'=>'TP.HCM','sdt'=>rand(1111111111,9999999999),'email'=>Str::random(5).'@gmail.com']
+        ]);
+    }
+}
 
 
