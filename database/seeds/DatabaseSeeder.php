@@ -13,16 +13,16 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call(AdminsSeeder::class);
-        // $this->call(UsersSeeder::class);
-        // $this->call(NhanVienSeeder::class);
-        // $this->call(QuyensSeeder::class);
-        // $this->call(ChucVuSeeder::class);
-        // $this->call(PhanQuyenSeeder::class);
-        // $this->call(Admin_Chucvu::class);
-        // $this->call(DocGiasSeeder::class);
+        $this->call(UsersSeeder::class);
+        $this->call(NhanVienSeeder::class);
+        $this->call(QuyensSeeder::class);
+        $this->call(ChucVuSeeder::class);
+        $this->call(PhanQuyenSeeder::class);
+        $this->call(Admin_Chucvu::class);
+        $this->call(DocGiasSeeder::class);
 
-        // $this->call(SachGroupSeeder::class);
-        // $this->call(NhanVienGroupSeeder::class);
+        $this->call(SachGroupSeeder::class);
+        $this->call(NhanVienGroupSeeder::class);
     }
 }
 class UsersSeeder extends Seeder{
