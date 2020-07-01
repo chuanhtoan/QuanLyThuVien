@@ -1,0 +1,20 @@
+.left-5rem{
+   margin-left: 5rem !important;
+}
+.pdleft-5rem{
+    padding-left: 5rem !important;
+}
+
+.hover-gray:hover{
+    background-color: #ebebeb !important;
+}
+.active > a{
+    background-color: #ebebeb !important;
+
+}
+
+.display-none{
+    display: none;  
+}
+
+
