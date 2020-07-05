@@ -43,9 +43,9 @@
                         <a class="nav-toggler open-close waves-effect waves-light hidden-md hidden-lg" href="javascript:void(0)"><i class="fa fa-bars"></i></a>
                     </li>
                     <li>
-                        <form role="search" class="app-search hidden-sm hidden-xs m-r-10">
-                            <input type="text" placeholder="Search..." class="form-control"> 
-                            <a href="">
+                        <form role="search" method="get" action="{{route('sach.search')}}" class="app-search hidden-sm hidden-xs m-r-10" >
+                            <input type="text" id = 'ten-sach-input' name="tenSach" placeholder="Tên sách..." class="form-control"> 
+                            <a href="" id = 'search-btn'>
                                 <i class="fa fa-search"></i>
                             </a> 
                         </form>

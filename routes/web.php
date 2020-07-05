@@ -59,6 +59,9 @@ Route::group(
               Route::get('phantrang','Sach@pagination')->name('sach-chuyen');
               Route::get('review/{id}','Sach@review')->name('sach.review')->middleware('KiemTraQuyen:soan_bai');
               Route::post('write/{id}','Sach@write')->name('sach.write');
+              Route::get('search','Sach@search')->name('sach.search');
+              Route::get('loc','Sach@formLoc')->name('sach.loc-dialog');
+              Route::get('lockq','Sach@locDanhSach')->name('sach.loc-kq');
             
             }
             );

@@ -12,7 +12,7 @@ class Sach extends Controller
 
 
     public function __construct(){
-       $this->middleware('KiemTraQuyen:quan_ly_sach',['except'=>['index'] ]);
+       $this->middleware('KiemTraQuyen:quan_ly_sach',['except'=>['index','search'] ]);
     }
     /**
      * Display a listing of the resource.
@@ -197,4 +197,77 @@ class Sach extends Controller
         $sach = \App\Model\sach::find($id);
         return view('backend.pages.sach.write')->with(['dulieu'=>$sach->mieuTa,'id'=>$id]);
     }
+
+
+    public function search(Request $request){
+        $mang = DB::table('saches')->where('tenSach','like','%'.$request->tenSach.'%')->first();
+       if($mang != null)   {
+    
+        $mang = DB::table('saches')->where('tenSach','like','%'.$request->tenSach.'%')->join('theloais','saches.ID_TheLoai','=','theloais.id')
+        ->join('tacgias','saches.ID_TacGia','=','tacgias.id')
+        ->join('nhaxbs','saches.ID_NXB','=','nhaxbs.id')
+        ->select(['saches.id','saches.tenSach','nhaxbs.tenNXB','tacgias.hoTen','theloais.tenTheLoai','saches.gia'
+        ,'saches.duocPhepMuon'])->paginate(5);
+
+          return view('backend.pages.sach.index')->with(['arr'=>$mang,'page'=>1]); 
+        }
+       else{
+       
+          return view('backend.pages.sach.index')->with(['arr'=>$mang,'page'=>1,'error'=>true]); 
+        }
+       
+    } 
+
+
+    // PHAN LOC SACH
+    public function formLoc(){
+      return view('backend.pages.sach.loc-dialog');
+    } 
+
+
+    public function locDanhSach(Request $request){
+        $mang = DB::table('saches')->join('theloais','saches.ID_TheLoai','=','theloais.id')
+        ->join('tacgias','saches.ID_TacGia','=','tacgias.id')
+        ->join('nhaxbs','saches.ID_NXB','=','nhaxbs.id')
+        ->select(['saches.id','saches.tenSach','nhaxbs.tenNXB','tacgias.hoTen','theloais.tenTheLoai','saches.gia'
+        ,'saches.duocPhepMuon']);
+        
+        if($request->id != 'null'){
+          
+            $mang = $mang->where('saches.id','LIKE','%'.$request->id.'%');
+        }
+        if($request->tenSach != null){
+            $mang = $mang->where('saches.tenSach','LIKE','%'.$request->tenSach.'%');
+        }
+        if($request->tacGia != null){
+            $mang = $mang->where('tacgias.tacGia','LIKE','%'.$request->tacGia.'%');
+        }
+        if($request->nxb != null){
+            $mang = $mang->where('nxbs.tenNXB','LIKE','%'.$request->nxb.'%');
+        }
+        if($request->tacGia != null){
+            $mang = $mang->where('duocPhepMuon',$request->duocPhep);
+        }
+        $mang= $mang->paginate(5);
+        return view('backend.pages.sach.phantrang')->with(['arr'=>$mang,'page'=>1])->render();   
+
+        // if($request->ngayMuon->tu != null){
+        //     $mang = $mang->where('ngayMuon','>=',$request->ngayMuon->tu);
+        // }
+        // if($request->ngayMuon->den != null){
+        //     $mang = $mang->where('ngayMuon','<=',$request->ngayMuon->den);
+        // }
+
+        // if($request->ngayTra->tu != null){
+        //     $mang = $mang->where('ngayTra','>=',$request->ngayTra->tu);
+        // }
+        // if($request->ngayTra->den != null){
+        //     $mang = $mang->where('ngayTra','<=',$request->ngayTra->den);
+        // }
+
+    }   
+
+
+
+     // KET THUC LOC SACH
 }
