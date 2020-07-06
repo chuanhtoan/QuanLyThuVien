@@ -26,7 +26,7 @@
     <div class="container-fluid">
         <div class="row bg-title">
             <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                <h4 class="page-title">Sach/The Loai</h4>
+                <h4 class="page-title">Sách/Nhà xuất bản</h4>
             </div>
         </div>
 
@@ -42,7 +42,7 @@
                         placeholder="Tối đa 50 kí tu">
                 </div>
                 
-                <div style="display: flex;">
+                
                 
                 
                 <div style="margin-top:2rem ;margin-right:1rem ;">

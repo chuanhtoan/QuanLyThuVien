@@ -70,7 +70,7 @@
                             </ul>
                         </div>
                     </li>
-                    <li>
+                    {{-- <li>
                         <a href="#thongke" data-toggle="collapse" class="waves-effect font-muli text-b"><i class="fa fa-info-circle fa-fw" aria-hidden="true"></i>Thống kê</a>
                         <div class="collapse" id="thongke">
 
@@ -80,7 +80,7 @@
                             <li class = "nav-item"><a class = "font-muli pdleft-5rem hover-gray nav-link" href="#">Theo đọc giả</a></li>
                         </ul>
                         </div>
-                    </li>
+                    </li> --}}
                     <li class="mb-4">
                         <a href="#canhan" data-toggle="collapse" class="waves-effect font-muli text-b"><i class="fa fa-info-circle fa-fw" aria-hidden="true"></i>Cá nhân</a>
                         <div class="collapse" id="canhan">

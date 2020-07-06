@@ -23,7 +23,7 @@
     <div class="container-fluid">
         <div class="row bg-title">
             <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                <h4 class="page-title">Sach/Tac gia</h4>
+                <h4 class="page-title">Sách/Nhà xuất bản</h4>
             </div>
             <a href="/admin/danhmuc/nxb/create">
                 <button class="btn btn-primary" style="background-color: #008f45; border: none; float: right;margin-right: 3rem;">Add</button>
@@ -55,9 +55,9 @@
                                 <td>{{$index++}}</td>
                                 <td class="txt-oflo">{{$item->id}} </td>
                                 <td>{{$item->tenNXB}}</td>
-                                <td class="txt-oflo">{{$item->tenNXB}} </td>
-                                <td class="txt-oflo">{{$item->email}} </td>
                                 <td class="txt-oflo">{{$item->sdt}} </td>
+                                <td class="txt-oflo">{{$item->email}} </td>
+                                
                                 <td>
                                 <a href="{{route('nxb.edit',$item->id ) }}"><button type="button" value="{{$item->id}}" class="sua btn btn-primary">Sửa</button></a>
                                     <button type="button" value="{{$item->id}}" class="xoa btn btn-danger">Xóa</button>

@@ -111,14 +111,17 @@
 <script>
 
     var page = 1;
-    const urlPhanTrang = "/admin/danhmuc/sach/phantrang?page=";
+    const urlPhanTrang = "/admin/danhmuc/sach/phantrang?";
     const urlXoa  = "/admin/danhmuc/sach/";
     // Chay Phan trang 
     $(document).on('click', '.pagination a', function (e) {
         e.preventDefault();
         page = $(this).attr("href").split('page=')[1];
-      
-        loadAjax(page);
+        var t = $(this).attr("href").split('?')[1].split('=')[0];
+       
+   
+        console.log(t);
+        loadAjax(page,t);
 
     });
 
@@ -159,7 +162,13 @@
 
 
     /// hamg xu ly load phan trang
-    function loadAjax(page_) {
+    function loadAjax(page_,tt) {
+        var url ='';
+        if(tt == 'page')
+          url = urlPhanTrang +'page=' +page_;
+        else {
+          url=urlPhanTrang+tt+'&' +'page=' +page_;
+        }
         $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -167,7 +176,7 @@
                 });
         $.ajax({
            
-            url: urlPhanTrang + page_,
+            url: url
 
         }).done(function (response) {
            

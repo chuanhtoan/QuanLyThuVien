@@ -9,10 +9,21 @@ use Validator;
 use File;
 class Sach extends Controller
 {
+   
 
+    protected $mangSach = null;
 
     public function __construct(){
        $this->middleware('KiemTraQuyen:quan_ly_sach',['except'=>['index','search'] ]);
+       $this->mangSach = DB::table('saches')->join('theloais','saches.ID_TheLoai','=','theloais.id')
+       ->join('tacgias','saches.ID_TacGia','=','tacgias.id')
+       ->join('nhaxbs','saches.ID_NXB','=','nhaxbs.id')
+       ->select(['saches.id','saches.tenSach','nhaxbs.tenNXB','tacgias.hoTen','theloais.tenTheLoai','saches.gia'
+       ,'saches.duocPhepMuon']);
+
+
+       
+       
     }
     /**
      * Display a listing of the resource.
@@ -21,13 +32,13 @@ class Sach extends Controller
      */
     public function index()
     {
-       $mang = DB::table('saches')->join('theloais','saches.ID_TheLoai','=','theloais.id')
-                   ->join('tacgias','saches.ID_TacGia','=','tacgias.id')
-                   ->join('nhaxbs','saches.ID_NXB','=','nhaxbs.id')
-                   ->select(['saches.id','saches.tenSach','nhaxbs.tenNXB','tacgias.hoTen','theloais.tenTheLoai','saches.gia'
-                   ,'saches.duocPhepMuon'])->paginate(5);
+       
 
-       return view('backend.pages.sach.index')->with(['arr'=>$mang,'page'=>1]);          
+        $this->mangSach= $this->mangSach->paginate(5);
+    //    foreach($this->mangSach as $arr){
+    //        dd($arr);
+    //    }
+       return view('backend.pages.sach.index')->with(['arr'=>$this->mangSach,'page'=>1]);          
     }
 
     /**
@@ -171,19 +182,35 @@ class Sach extends Controller
     }
 
     public function pagination(Request $request){
-
+      
+        
         if($request->ajax()){
-            
-            $mang = DB::table('saches')->join('theloais','saches.ID_TheLoai','=','theloais.id')
-            ->join('tacgias','saches.ID_TacGia','=','tacgias.id')
-            ->join('nhaxbs','saches.ID_NXB','=','nhaxbs.id')
-            ->select(['saches.id','saches.tenSach','nhaxbs.tenNXB','tacgias.hoTen','theloais.tenTheLoai','saches.gia'
-            ,'saches.duocPhepMuon'])->paginate(5);
-    
-            return view('backend.pages.sach.phantrang')->with(['arr'=>$mang,'page'=>$request->page])->render();   
-        }
+            $mang = 0;
+           
+            if($request->has('search')){
                
-    
+                $mang = DB::table('saches')->where('tenSach','like','%'.$request->tenSach.'%')->first();
+                if($mang != null)   {
+             
+                    $mang = DB::table('saches')->where('tenSach','like','%'.$request->tenSach.'%')->join('theloais','saches.ID_TheLoai','=','theloais.id')
+                    ->join('tacgias','saches.ID_TacGia','=','tacgias.id')
+                    ->join('nhaxbs','saches.ID_NXB','=','nhaxbs.id')
+                    ->select(['saches.id','saches.tenSach','nhaxbs.tenNXB','tacgias.hoTen','theloais.tenTheLoai','saches.gia'
+                    ,'saches.duocPhepMuon'])->paginate(5);
+                    
+                 $mang->appends('search',$request->tenSach);
+                }
+            }else if($request->has('fitler')){
+              
+                $mang = $this->resultFilter($request);
+                $mang= $mang->paginate(5);
+                $mang->appends('fitler','filter');
+            }
+            else{
+                $mang= $this->mangSach->paginate(5);
+            }
+            return view('backend.pages.sach.phantrang')->with(['arr'=>  $mang,'page'=>$request->page])->render();   
+        }
     }
     public function write(Request $request, $id){
        $review = $request->review;
@@ -208,7 +235,8 @@ class Sach extends Controller
         ->join('nhaxbs','saches.ID_NXB','=','nhaxbs.id')
         ->select(['saches.id','saches.tenSach','nhaxbs.tenNXB','tacgias.hoTen','theloais.tenTheLoai','saches.gia'
         ,'saches.duocPhepMuon'])->paginate(5);
-
+       
+        $mang->appends('search',$request->tenSach);
           return view('backend.pages.sach.index')->with(['arr'=>$mang,'page'=>1]); 
         }
        else{
@@ -226,6 +254,29 @@ class Sach extends Controller
 
 
     public function locDanhSach(Request $request){
+        $mang = $this->resultFilter($request);
+        $mang= $mang->paginate(5);
+        $mang= $mang->appends(['fitler'=>'filter']);
+        return view('backend.pages.sach.phantrang')->with(['arr'=>$mang,'page'=>1])->render();   
+
+        // if($request->ngayMuon->tu != null){
+        //     $mang = $mang->where('ngayMuon','>=',$request->ngayMuon->tu);
+        // }
+        // if($request->ngayMuon->den != null){
+        //     $mang = $mang->where('ngayMuon','<=',$request->ngayMuon->den);
+        // }
+
+        // if($request->ngayTra->tu != null){
+        //     $mang = $mang->where('ngayTra','>=',$request->ngayTra->tu);
+        // }
+        // if($request->ngayTra->den != null){
+        //     $mang = $mang->where('ngayTra','<=',$request->ngayTra->den);
+        // }
+
+    }   
+
+
+    public function resultFilter(Request $request){
         $mang = DB::table('saches')->join('theloais','saches.ID_TheLoai','=','theloais.id')
         ->join('tacgias','saches.ID_TacGia','=','tacgias.id')
         ->join('nhaxbs','saches.ID_NXB','=','nhaxbs.id')
@@ -248,24 +299,9 @@ class Sach extends Controller
         if($request->tacGia != null){
             $mang = $mang->where('duocPhepMuon',$request->duocPhep);
         }
-        $mang= $mang->paginate(5);
-        return view('backend.pages.sach.phantrang')->with(['arr'=>$mang,'page'=>1])->render();   
 
-        // if($request->ngayMuon->tu != null){
-        //     $mang = $mang->where('ngayMuon','>=',$request->ngayMuon->tu);
-        // }
-        // if($request->ngayMuon->den != null){
-        //     $mang = $mang->where('ngayMuon','<=',$request->ngayMuon->den);
-        // }
-
-        // if($request->ngayTra->tu != null){
-        //     $mang = $mang->where('ngayTra','>=',$request->ngayTra->tu);
-        // }
-        // if($request->ngayTra->den != null){
-        //     $mang = $mang->where('ngayTra','<=',$request->ngayTra->den);
-        // }
-
-    }   
+        return $mang;
+    }
 
 
 

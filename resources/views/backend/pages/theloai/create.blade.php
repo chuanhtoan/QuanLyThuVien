@@ -165,8 +165,8 @@
             },
             mieuTa: {
                 required: true,
-                minlength: 7,
-                maxlength: 50
+                minlength: 5,
+                maxlength: 100
             },
            
 
@@ -174,8 +174,8 @@
         messages: {
             tenTheLoai: {
                 required: 'Bạn phải nhập trường này',
-                minlength: "Tối thiểu 7 kí tự",
-                maxlength: "Tối đa 50 kí tự"
+                minlength: "Tối thiểu 5 kí tự",
+                maxlength: "Tối đa 100 kí tự"
             },
             mieuTa: {
                 required: 'Bạn phải nhập trường này',

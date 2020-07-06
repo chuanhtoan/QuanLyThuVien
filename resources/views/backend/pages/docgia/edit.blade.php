@@ -25,7 +25,7 @@
     <div class="container-fluid">
         <div class="row bg-title">
             <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                <h4 class="page-title">Doc Gia</h4>
+                <h4 class="page-title">SÁCH/ĐỌC GIẢ</h4>
             </div>
         </div>
 
@@ -175,10 +175,10 @@
     function thucHienAjax(id) {
         var obj = {
             'hoTen': $("#hoTen").val(),
-            'tomTat': $("#tomTat").val(),
             'namSinh': $("#namSinh").val(),
-            'namMat': $("#namMat").val(),
-            'quocTich': $("#quocTich").val(),
+            'diaChi': $("#diaChi").val(),
+            'sdt': $("#sdt").val(),
+            'email': $("#email").val(),
             // 'theLoai': $('input[name=theLoai]:checked').val(),
         
         };
