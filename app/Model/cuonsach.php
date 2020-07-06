@@ -10,6 +10,6 @@ class cuonsach extends Model
     protected $fillable = ['id','ID_Sach','daMuon','hienThi'];
 
     public function sach(){
-        return $this->belongsTo('App\Model\sach','ID_Sach');
+        return $this->hasOne('App\Model\sach','id','ID_Sach');
     }
 }
