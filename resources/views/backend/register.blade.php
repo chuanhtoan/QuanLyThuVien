@@ -136,7 +136,7 @@
         crossorigin="anonymous"></script>
 
     <script type="text/javascript"
-        src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
+        src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
     <!--===============================================================================================-->
     <script src="{{asset('login/vendor/animsition/js/animsition.min.js ')}}"></script>
 
